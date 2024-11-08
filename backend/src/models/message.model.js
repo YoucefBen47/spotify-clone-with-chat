@@ -6,7 +6,7 @@ const messageSchema = new mongoose.Schema(
     receiverId: { type: String, required: true }, // CLerd user ID
     content: { type: String, required: true },
   },
-  { timestamps: trye }
+  { timestamps: true }
 );
 
 export const Message = mongoose.model("Message", messageSchema);
