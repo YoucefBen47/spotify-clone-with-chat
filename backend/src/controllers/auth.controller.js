@@ -3,8 +3,7 @@ import { User } from "../models/user.model.js";
 export const saveUSer = async (req, res, next) => {
   try {
     const { id, firstName, lastName, imageUrl } = req.body;
-
-    const user = User.findById({ clerkId: id });
+    const user = await User.findOne({ clerkId: id });
 
     if (!user) {
       await User.create({
@@ -16,7 +15,7 @@ export const saveUSer = async (req, res, next) => {
       res.status(200).json({ success: true });
     }
   } catch (error) {
-    console.log("error in auth callback");
+    console.log("error in auth callback", error);
     next(error);
   }
 };

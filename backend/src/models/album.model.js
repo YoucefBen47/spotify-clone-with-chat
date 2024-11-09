@@ -14,10 +14,6 @@ const albumSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    audioUrl: {
-      type: String,
-      required: true,
-    },
     releaseYear: {
       type: Number,
       required: true,
