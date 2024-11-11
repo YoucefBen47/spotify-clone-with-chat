@@ -8,12 +8,11 @@ export const saveUSer = async (req, res, next) => {
     if (!user) {
       await User.create({
         clerkId: id,
-        fullname: `${firstName} ${lastName}`,
+        fullName: `${firstName} ${lastName}`,
         imageUrl,
       });
-
-      res.status(200).json({ success: true });
     }
+    res.status(200).json({ success: true });
   } catch (error) {
     console.log("error in auth callback", error);
     next(error);
