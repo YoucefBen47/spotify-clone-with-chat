@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMusicStore } from "@/stores/useMusicStore";
-// import { usePlayerStore } from "@/stores/usePlayerStore";
+import { usePlayerStore } from "@/stores/usePlayerStore";
 import { Clock, Pause, Play } from "lucide-react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ export const formatDuration = (seconds: number) => {
 const AlbumPage = () => {
   const { albumId } = useParams();
   const { fetchAlbumById, currentAlbum, isLoading } = useMusicStore();
-  // const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
+  const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
 
   useEffect(() => {
     if (albumId) fetchAlbumById(albumId);
@@ -23,27 +23,24 @@ const AlbumPage = () => {
 
   if (isLoading) return null;
 
-  // const handlePlayAlbum = () => {
-  //   if (!currentAlbum) return;
+  const handlePlayAlbum = () => {
+    if (!currentAlbum) return;
 
-  //   const isCurrentAlbumPlaying = currentAlbum?.songs.some(
-  //     (song) => song._id === currentSong?._id
-  //   );
-  //   if (isCurrentAlbumPlaying) togglePlay();
-  //   else {
-  //     // start playing the album from the beginning
-  //     playAlbum(currentAlbum?.songs, 0);
-  //   }
-  // };
+    const isCurrentAlbumPlaying = currentAlbum?.songs.some(
+      (song) => song._id === currentSong?._id
+    );
+    if (isCurrentAlbumPlaying) togglePlay();
+    else {
+      // start playing the album from the beginning
+      playAlbum(currentAlbum?.songs, 0);
+    }
+  };
 
-  // const handlePlaySong = (index: number) => {
-  //   if (!currentAlbum) return;
+  const handlePlaySong = (index: number) => {
+    if (!currentAlbum) return;
 
-  //   playAlbum(currentAlbum?.songs, index);
-  // };
-
-  return <div>album page</div>;
-
+    playAlbum(currentAlbum?.songs, index);
+  };
   return (
     <div className="h-full">
       <ScrollArea className="h-full rounded-md">
