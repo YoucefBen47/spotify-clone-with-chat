@@ -5,6 +5,7 @@ import fileUpload from "express-fileupload";
 import path from "path";
 import cors from "cors";
 import { connectDB } from "./lib/db.js";
+import { createServer } from "http";
 
 import userRoutes from "./routes/user.route.js";
 import adminRoutes from "./routes/admin.route.js";
@@ -12,6 +13,7 @@ import authRoutes from "./routes/auth.route.js";
 import songRoutes from "./routes/song.router.js";
 import albumRoutes from "./routes/album.route.js";
 import statRoutes from "./routes/stat.route.js";
+import { initializeSocket } from "./lib/socket.js";
 
 dotenv.config();
 
@@ -19,6 +21,9 @@ const __dirname = path.resolve();
 
 const app = express();
 const PORT = process.env.PORT;
+
+const httpServer = createServer(app);
+initializeSocket(httpServer);
 
 app.use(
   cors({
@@ -58,7 +63,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
   connectDB();
 });
