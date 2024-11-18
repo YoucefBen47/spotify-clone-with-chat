@@ -25,14 +25,15 @@ export const createSong = async (req, res, next) => {
     const audioFile = req.files.audioFile;
     const imageFile = req.files.imageFile;
 
-    const audioUrl = uploadToCloudinary(audioFile);
-    const imageUrl = uploadToCloudinary(imageFile);
+    const audioUrl = await uploadToCloudinary(audioFile);
+    const imageUrl = await uploadToCloudinary(imageFile);
     const song = new Song({
       title,
       artist,
       audioUrl,
       imageUrl,
-      albulId: albumId || null,
+      duration,
+      albumId: albumId || null,
     });
     await song.save();
 
@@ -63,7 +64,7 @@ export const deleteSong = async (req, res, next) => {
       });
     }
 
-    await song.findByIdAndDelete(id);
+    await Song.findByIdAndDelete(id);
 
     res.status(200).json({ message: "Song deleted successfully" });
   } catch (error) {
