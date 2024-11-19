@@ -32,7 +32,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   users: [],
   isLoading: false,
   error: null,
-  socket: null,
+  socket: socket,
   isConnected: false,
   onlineUsers: new Set(),
   userActivities: new Map(),
@@ -114,7 +114,9 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     }
   },
   sendMessage: (receiverId, senderId, content) => {
-    const socket = get().socket();
+    const socket = get().socket;
+    console.log(socket);
+
     if (!socket) return;
 
     socket.emit("send_message", { receiverId, senderId, content });
